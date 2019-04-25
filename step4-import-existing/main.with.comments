@@ -1,0 +1,65 @@
+resource "azurerm_resource_group" "beaulabsrg" {
+name = "${var.prefix}-sandbox"
+location = "${var.location}"
+}
+
+resource "azurerm_virtual_network" "beaulabsvn"{
+    name = "${var.prefix}-sandbox-vnet"
+    location = "${var.location}"
+    resource_group_name = "${var.prefix}-sandbox"
+    address_space = ["172.16.0.0/24"]
+}
+
+resource "azurerm_subnet" "beaulabssubnet" {
+    name = "default"
+    resource_group_name = "${azurerm_resource_group.beaulabsrg.name}"
+    virtual_network_name = "${azurerm_virtual_network.beaulabsvn.name}"
+    address_prefix = "172.16.0.0/24"
+}
+resource "azurerm_virtual_machine" "beaulabsvm" {
+    name = "${var.prefix}-ubuntu-2"
+    resource_group_name = "${azurerm_resource_group.beaulabsrg.name}"
+    location = "${azurerm_resource_group.beaulabsrg.location}"
+    network_interface_ids = ["${var.prefix}-ubuntu-2605"]
+    vm_size = "Standard B1ls"
+
+storage_os_disk {
+    name              = "${var.prefix}-ubuntu-2_OsDisk_1_933d1d0c5bf745df97675d6f4dbcc47f"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "StandardSSD_LRS"
+  }
+}
+resource "azurerm_network_interface" "beaulabsnic" {
+  name                = "${var.prefix}-ubuntu-2605"
+  location            = "${azurerm_resource_group.beaulabsrg.location}"
+  resource_group_name = "${azurerm_resource_group.beaulabsrg.name}"
+
+  ip_configuration {
+    name                          = "${var.prefix}-ubuntu-2-ip"
+    subnet_id                     = "${azurerm_subnet.beaulabssubnet.id}"
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+# resource "azurerm_network_security_group" "beaulabsnsg" {
+#   name                = "${var.prefix}-ubuntu-2-nsg"
+#   location            = "${azurerm_resource_group.beaulabsrg.location}"
+#   resource_group_name = "${azurerm_resource_group.beaulabsrg.name}"
+
+#   security_rule {
+#     name                       = "SSH"
+#     priority                   = 300
+#     direction                  = "Inbound"
+#     access                     = "Allow"
+#     protocol                   = "Tcp"
+#     source_port_range          = "*"
+#     destination_port_range     = "22"
+#     source_address_prefix      = "*"
+#     destination_address_prefix = "*"
+#   }
+# }
+    #os_profile_linux_config {
+    #disable_password_authentication = true
+  #}
+
