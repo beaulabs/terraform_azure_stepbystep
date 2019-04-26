@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "beaulabs_resgrp" {
 
   tags = {
     environment = "development"
-    owner       = "beaulabs-devteam-1"
+    owner       = "beaulabs-devteam-11"
   }
 }
 
