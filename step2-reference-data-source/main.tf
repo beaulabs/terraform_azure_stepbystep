@@ -4,10 +4,10 @@ provider "azurerm" {
   version = "=1.25.0"
 }
 
-# This assumes a Virtual Network named `azgbc-beaulabs-vnetwork` exists in the Resource Group `azgbc-beaulabs`.
+# This assumes a Virtual Network named "beaulabs-azgbc-vnetwork` exists in the Resource Group "beaulabs-azgbc`.
 data "azurerm_virtual_network" "devnetwork" {
-  name                = "azgbc-beaulabs-vnetwork"
-  resource_group_name = "azgbc-beaulabs"
+  name                = "beaulabs-azgbc-vnetwork"
+  resource_group_name = "beaulabs-azgbc"
 }
 
 resource "azurerm_subnet" "uatsubnet" {
