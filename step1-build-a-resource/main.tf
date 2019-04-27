@@ -30,7 +30,7 @@ resource "azurerm_virtual_network" "beaulabs-vnetwork" {
   }
 
   subnet {
-    name           = "devnet10"
+    name           = "devnet1"
     address_prefix = "10.0.10.0/24"
   }
 

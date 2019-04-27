@@ -23,6 +23,7 @@ output "_Instructions" {
 
  Run the command below to SSH into your server. You can also use PuTTY or any
  other SSH client. Your password is: ${var.admin_password}
+
 # 
  ssh ${var.admin_username}@${azurerm_public_ip.vault-pip.fqdn}
  SHELLCOMMANDS
