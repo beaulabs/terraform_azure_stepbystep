@@ -38,7 +38,7 @@ variable "vm_size" {
   description = "Specifies the size of the virtual machine."
 
   #default     = "Standard_A0"
-  default = "Standard_B1s"
+  default = "Standard_B1ls"
 }
 
 variable "vault_source_ips" {
